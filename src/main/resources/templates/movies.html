@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciamento dos filmes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+          crossorigin="anonymous">
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+            crossorigin="anonymous">
+    </script>
+
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Gerenciamento dos filmes</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" th:href="@{/movies}">Home</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar -->
+
+
+    <div class="container">
+        <div class="row">
+            <h1>Gerenciamento dos filmes</h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <a th:href="@{/movies/new}" class="btn btn-primary btn-sm mb-3">Adicionar um novo filme</a>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>Nome do filme</th>
+                <th>Nome original</th>
+                <th>Gênero</th>
+                <th>Elenco</th>
+                <th>Diretor</th>
+                <th>Duração</th>
+                <th>Classificação</th>
+                <th>Em cartaz</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="movie : ${movies}">
+                    <td th:text="${movie.titleBr}">Nome do filme</td>
+                    <td th:text="${movie.titleOriginal}">Nome original</td>
+                    <td th:text="${movie.genre}">Gênero</td>
+                    <td th:text="${movie.mainCast}">Elenco</td>
+                    <td th:text="${movie.director}">Diretor</td>
+                    <td th:text="${movie.length}">Duração</td>
+                    <td th:text="${movie.requiredAge}">Classificação</td>
+                    <td th:text="${movie.released}">Em cartaz</td>
+                    <td>
+                        <a th:href="@{/movies/{id}/edit(id=${movie.id})}" class="btn btn-primary btn-sm">Edit</a>
+                        <a th:href="@{/movies/{id}/delete(id=${movie.id})}"  class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</body>
+</html>
