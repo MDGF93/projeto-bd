@@ -45,6 +45,7 @@
         <table class="table table-striped">
             <thead class="table-dark">
             <tr>
+                <th>Pôster</th>
                 <th>Nome do filme</th>
                 <th>Nome original</th>
                 <th>Gênero</th>
@@ -58,14 +59,23 @@
             </thead>
             <tbody>
                 <tr th:each="movie : ${movies}">
+                    <td><img th:src="${movie.poster}" width="100" height="150"></td>
                     <td th:text="${movie.titleBr}">Nome do filme</td>
                     <td th:text="${movie.titleOriginal}">Nome original</td>
                     <td th:text="${movie.genre}">Gênero</td>
                     <td th:text="${movie.mainCast}">Elenco</td>
                     <td th:text="${movie.director}">Diretor</td>
                     <td th:text="${movie.length}">Duração</td>
-                    <td th:text="${movie.requiredAge}">Classificação</td>
-                    <td th:text="${movie.released}">Em cartaz</td>
+                    <td th:switch="${movie.requiredAge}">
+                        <span th:case="0">Livre</span>
+                        <span th:case="10">10</span>
+                        <span th:case="12">12</span>
+                        <span th:case="14">14</span>
+                        <span th:case="16">16</span>
+                        <span th:case="18">18</span>
+                    <td th:switch="${movie.released}">
+                        <span th:case="true">Sim</span>
+                        <span th:case="false">Não</span>
                     <td>
                         <a th:href="@{/movies/{id}/edit(id=${movie.id})}" class="btn btn-primary btn-sm">Edit</a>
                         <a th:href="@{/movies/{id}/delete(id=${movie.id})}"  class="btn btn-danger btn-sm">Delete</a>

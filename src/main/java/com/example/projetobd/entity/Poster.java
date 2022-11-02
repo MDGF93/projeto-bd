@@ -23,4 +23,9 @@ public class Poster {
         this.url = url;
         this.movie = movie;
     }
+
+    @Override
+    public String toString() {
+        return this.getUrl();
+    }
 }

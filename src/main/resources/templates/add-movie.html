@@ -3,39 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Adicionar novo filme</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
-          crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-            crossorigin="anonymous">
-    </script>
-
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Adicionar novo filme</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link" th:href="@{/movies}">Home</a>
-                </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Adicionar novo filme</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" th:href="@{/movies}">Home</a>
             </div>
         </div>
-    </nav>
-    <!-- Navbar -->
-
-    <div class="container">
-        <div class="row">
-            <h1>Adicionar um novo filme</h1>
-        </div>
+    </div>
+</nav>
+<!-- Navbar -->
+<div class="container">
+    <div class="row">
+        <h1>Adicionar um novo filme</h1>
+    </div>
     <form action="#" th:action="@{/movies}" th:object="${moviePosterRequest}" method="post" class="form">
         <div class="form-group">
             <label for="titleBr">Título em português</label>
@@ -47,11 +37,81 @@
             <input type="text" class="form-control" id="titleOriginal" th:field="*{titleOriginal}">
             <div class="text-danger" th:if="${#fields.hasErrors('titleOriginal')}" th:errors="*{titleOriginal}"></div>
         </div>
-        <div class="form-group">
-            <label for="genre">Gênero</label>
-            <input type="text" class="form-control" id="genre" th:field="*{genre}">
-            <div class="text-danger" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></div>
-        </div>
+        <fieldset>
+            <legend>Selecione o gênero principal do filme</legend>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="genre" type="radio" id="AÇÃO" value="AÇÃO" th:field="*{genre}">
+                <label for="AÇÃO">Ação</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="genre" type="radio" id="COMÉDIA" value="COMÉDIA" th:field="*{genre}">
+                <label for="COMÉDIA">Comédia</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="genre" type="radio" id="COMÉDIA_ROMÂNTICA" value="COMÉDIA_ROMÂNTICA" th:field="*{genre}">
+                <label for="COMÉDIA_ROMÂNTICA">Comédia Romântica</label>
+            </div>
+            <input class="form-check-input" name="genre" type="radio" id="TERROR" value="TERROR" th:field="*{genre}">
+            <label for="TERROR">Terror</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="genre" type="radio" id="AVENTURA" value="AVENTURA" th:field="*{genre}">
+                <label for="AVENTURA">Aventura</label>
+            </div>
+            <input class="form-check-input" name="genre" type="radio" id="DRAMA" value="DRAMA" th:field="*{genre}">
+            <label for="DRAMA">Drama</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="genre" type="radio" id="FICÇÃO_CIENTÍFICA" value="FICÇÃO_CIENTÍFICA" th:field="*{genre}">
+                <label for="FICÇÃO_CIENTÍFICA">Ficção Científica</label>
+            </div>
+            <input class="form-check-input" name="genre" type="radio" id="SUSPENSE" value="SUSPENSE" th:field="*{genre}">
+            <label for="SUSPENSE">Suspense</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="genre" type="radio" id="MUSICAL" value="MUSICAL" th:field="*{genre}">
+                <label for="MUSICAL">Musical</label>
+            </div>
+            <input class="form-check-input" name="genre" type="radio" id="DOCUMENTÁRIO" value="DOCUMENTÁRIO" th:field="*{genre}">
+            <label for="DOCUMENTÁRIO">Documentário</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="genre" type="radio" id="ANIMAÇÃO" value="ANIMAÇÃO" th:field="*{genre}">
+                <label for="ANIMAÇÃO">Animação</label>
+            </div>
+            <input class="form-check-input" name="genre" type="radio" id="INFANTIL" value="INFANTIL" th:field="*{genre}">
+            <label for="INFANTIL">Infantil</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="genre" type="radio" id="ROMANCE" value="ROMANCE" th:field="*{genre}">
+                <label for="ROMANCE">Romance</label>
+            </div>
+            <input class="form-check-input" name="genre" type="radio" id="FANTASIA" value="FANTASIA" th:field="*{genre}">
+            <label for="FANTASIA">Fantasia</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="genre" type="radio" id="GUERRA" value="GUERRA" th:field="*{genre}">
+                <label for="GUERRA">Guerra</label>
+            </div>
+            <input class="form-check-input" name="genre" type="radio" id="FAROESTE" value="FAROESTE" th:field="*{genre}">
+            <label for="FAROESTE">Faroeste</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="genre" type="radio" id="POLICIAL" value="POLICIAL" th:field="*{genre}">
+                <label for="POLICIAL">Policial</label>
+            </div>
+            <input class="form-check-input" name="genre" type="radio" id="BIOGRAFIA" value="BIOGRAFIA" th:field="*{genre}">
+            <label for="BIOGRAFIA">Biografia</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="genre" type="radio" id="HISTÓRICO" value="HISTÓRICO" th:field="*{genre}">
+                <label for="HISTÓRICO">Histórico</label>
+            </div>
+            <input class="form-check-input" name="genre" type="radio" id="ESPIONAGEM" value="ESPIONAGEM" th:field="*{genre}">
+            <label for="ESPIONAGEM">Espionagem</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="genre" type="radio" id="MISTÉRIO" value="MISTÉRIO" th:field="*{genre}">
+                <label for="MISTÉRIO">Mistério</label>
+            </div>
+            <input class="form-check-input" name="genre" type="radio" id="CRIME" value="CRIME" th:field="*{genre}">
+            <label for="CRIME">Crime</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="genre" type="radio" id="ANIME" value="ANIME" th:field="*{genre}">
+                <label for="ANIME">Anime</label>
+            </div>
+        </fieldset>
         <div class="form-group">
             <label for="mainCast">Elenco</label>
             <input type="text" class="form-control" id="mainCast" th:field="*{mainCast}">
@@ -63,15 +123,37 @@
             <div class="text-danger" th:if="${#fields.hasErrors('director')}" th:errors="*{director}"></div>
         </div>
         <div class="form-group">
-            <label for="length">Duração</label>
+            <label for="length">Duração (em minutos)</label>
             <input type="text" class="form-control" id="length" th:field="*{length}">
             <div class="text-danger" th:if="${#fields.hasErrors('length')}" th:errors="*{length}"></div>
         </div>
-        <div class="form-group">
-            <label for="requiredAge">Classificação</label>
-            <input type="text" class="form-control" id="requiredAge" th:field="*{requiredAge}">
-            <div class="text-danger" th:if="${#fields.hasErrors('requiredAge')}" th:errors="*{requiredAge}"></div>
-        </div>
+        <fieldset>
+            <legend>Selecione a classificação para o filme</legend>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="requiredAge" type="radio" id="Livre" value="0" th:field="*{requiredAge}">
+                <label for="Livre">Livre</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="requiredAge" type="radio" id="10 anos" value="10" th:field="*{requiredAge}">
+                <label for="10 anos">10 anos</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="requiredAge" type="radio" id="12 anos" value="12" th:field="*{requiredAge}">
+                <label for="12 anos">12 anos</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="requiredAge" type="radio" id="14 anos" value="14" th:field="*{requiredAge}">
+                <label for="14 anos">14 anos</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="requiredAge" type="radio" id="16 anos" value="16" th:field="*{requiredAge}">
+                <label for="16 anos">16 anos</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="requiredAge" type="radio" id="18 anos" value="18" th:field="*{requiredAge}">
+                <label for="18 anos">18 anos</label>
+            </div>
+        </fieldset>
         <div class="form-group">
             <label for="synopsis">Sinopse</label>
             <input type="text" class="form-control" id="synopsis" th:field="*{synopsis}">
@@ -87,14 +169,13 @@
             <input type="text" class="form-control" id="url" th:field="*{url}">
             <div class="text-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></div>
         </div>
-
         <div class="form-date">
             <label for="releaseDate">Data de lançamento:</label>
             <input type="date" id="releaseDate" name="releaseDate-start" value="2022-10-25"
                    min="1901-01-01" max="2030-12-31"
                    th:field="*{releaseDate}">
+            <div class="text-danger" th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}"></div>
         </div>
-
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="national" th:field="*{national}">
             <label class="form-check-label" for="national">Nacional</label>
@@ -105,6 +186,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Adicionar</button>
     </form>
-    </div>
+</div>
 </body>
 </html>

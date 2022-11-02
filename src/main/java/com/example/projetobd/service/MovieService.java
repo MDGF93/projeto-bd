@@ -65,9 +65,11 @@ public class MovieService {
         //Check if movie has poster
         if (movieRepository.findById(movieId).get().getPoster() != null) {
             //Delete poster
-            Poster posterToDelete = movieRepository.findById(movieId).get().getPoster();
+            Poster posterToDelete = posterRepository.findByMovieId(movieId);
+            System.out.println(posterToDelete);
             posterToDelete.setMovie(null);
             posterRepository.delete(posterToDelete);
+            posterRepository.flush();
         }
         Movie movieToDelete = movieRepository.findById(movieId).get();
         movieToDelete.setPoster(null);
