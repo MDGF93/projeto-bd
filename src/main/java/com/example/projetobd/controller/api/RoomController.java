@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/room")
+@RequestMapping("/api/rooms")
 public class RoomController {
 
     private final RoomService roomService;
@@ -23,8 +23,8 @@ public class RoomController {
     }
 
     @PostMapping("/session/{roomId}")
-    public void addSessionToRoom(@PathVariable Long roomId, @RequestBody SessionCreateRequest sessionCreateRequest) {
-        roomService.addSessionToRoom(roomId, sessionCreateRequest);
+    public void addSessionToRoom(@RequestBody SessionCreateRequest sessionCreateRequest) {
+        roomService.addSessionToRoom(sessionCreateRequest);
     }
 
     @DeleteMapping("/session/{roomId}/{sessionId}")

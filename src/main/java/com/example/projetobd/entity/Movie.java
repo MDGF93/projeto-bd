@@ -1,17 +1,17 @@
 package com.example.projetobd.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import net.bytebuddy.utility.nullability.MaybeNull;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie {
@@ -37,7 +37,21 @@ public class Movie {
     private boolean national;
     private boolean released;
     @OneToMany
+    @ToString.Exclude
     private List<Session> sessions;
     @OneToOne(cascade = CascadeType.PERSIST)
     private Poster poster;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Movie movie = (Movie) o;
+        return id != null && Objects.equals(id, movie.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

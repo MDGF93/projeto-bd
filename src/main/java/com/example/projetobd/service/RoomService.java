@@ -23,13 +23,14 @@ public class RoomService {
 
     public void createRoom(Integer capacity) {
         Room room = new Room(capacity);
+        roomRepository.save(room);
     }
 
-    public void addSessionToRoom(Long roomId, SessionCreateRequest sessionCreateRequest) {
+    public void addSessionToRoom(SessionCreateRequest sessionCreateRequest) {
         Session session = new Session();
         session.setMovie(movieRepository.findById(sessionCreateRequest.getMovieId()).get());
         session.setStartTime(sessionCreateRequest.getStartTime());
-        Room room = roomRepository.findById(roomId).get();
+        Room room = roomRepository.findById(sessionCreateRequest.getRoomId()).get();
         session.setRoom(room);
         session.setSessionMovieTitle(session.getMovie().getTitleBr());
         session.setEndTime(session.getStartTime().plusMinutes(session.getMovie().getLength()));
@@ -68,6 +69,16 @@ public class RoomService {
 
     public Room getRoomById(Long roomId) {
         return roomRepository.findById(roomId).get();
+    }
+
+    public void updateRoom(Long roomId, Integer capacity) {
+        Room room = roomRepository.findById(roomId).get();
+        room.setCapacity(capacity);
+        roomRepository.save(room);
+    }
+
+    public void deleteRoom(Long roomId) {
+        roomRepository.deleteById(roomId);
     }
 }
 

@@ -2,15 +2,19 @@ package com.example.projetobd.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.Hibernate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Session {
@@ -26,21 +30,37 @@ public class Session {
     @JsonIgnore
     private Room room;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Ticket> tickets;
-
     private String sessionMovieTitle;
+
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime startTime;
 
     //create endTime based on startTime and movie duration
     private LocalTime endTime;
 
-    public Session(Movie movie, Room room, List<Ticket> tickets, LocalTime startTime) {
+    public Session(Movie movie, Room room, LocalTime startTime) {
         this.movie = movie;
         this.room = room;
-        this.tickets = tickets;
         this.startTime = startTime;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Session session = (Session) o;
+        return id != null && Objects.equals(id, session.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        //toString should print the movie's titleBr and its session starting time
+        return this.movie.getTitleBr() + " - " + this.startTime;
+
+    }
 }
