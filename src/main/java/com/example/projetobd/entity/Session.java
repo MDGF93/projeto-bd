@@ -59,8 +59,7 @@ public class Session {
 
     @Override
     public String toString() {
-        //toString should print the movie's titleBr and its session starting time
-        return this.movie.getTitleBr() + " - " + this.startTime;
-
+        //should print in the following format: 12:00 - 13:30 - Room 1 - Movie Title
+        return this.getStartTime() + " - " + this.getEndTime() + " - " + this.getRoom().getId() + " - " + this.getSessionMovieTitle();
     }
 }
