@@ -43,10 +43,9 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Capacidade</th>
+                <th>Poltronas</th>
                 <th>Sessões</th>
                 <th>Adicionar Sessão</th>
-                <th>Editar</th>
                 <th>Excluir</th>
             </tr>
             </thead>
@@ -54,9 +53,20 @@
             <tr th:each="room : ${rooms}">
                 <td th:text="${room.id}"></td>
                 <td th:text="${room.capacity}"></td>
-                <td th:text="${room.getSessions()}">
+                <!-- for each session in getSessionsThatAreNotFullAndStillRunning, print session, print the sessions in a dropdown menu, and option should be clickable and redirect to that specific session webpage like so: localhost:9999/sessions/{sessionId} -->
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            Sessões
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li th:each="sessao : ${roomService.getSessionsThatAreNotFullAndStillRunning(room.id)}">
+                                <a th:href="@{/sessions/{sessaoId}(sessaoId=${sessao.id})}" class="dropdown-item" th:text="${sessao}"></a>
+                            </li>
+                        </ul>
+                    </div>
                 <td><a th:href="@{/rooms/{id}/new-session(id=${room.id})}" class="btn btn-primary">Adicionar</a></td>
-                <td><a th:href="@{/rooms/{id}/edit(id=${room.id})}" class="btn btn-primary">Editar</a></td>
                 <td><a th:href="@{/rooms/{id}/delete(id=${room.id})}" class="btn btn-danger">Excluir</a></td>
             </tr>
             </tbody>

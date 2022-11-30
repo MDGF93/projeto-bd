@@ -26,6 +26,14 @@ public class Ticket {
 
     private boolean isCreditCard;
 
+    public Ticket(Session session, Integer seatNumber, TicketType ticketType, boolean isCreditCard) {
+        this.session = session;
+        this.seatNumber = seatNumber;
+        this.ticketType = ticketType;
+        this.isCreditCard = isCreditCard;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -33,6 +41,8 @@ public class Ticket {
         Ticket ticket = (Ticket) o;
         return id != null && Objects.equals(id, ticket.id);
     }
+
+
 
     @Override
     public int hashCode() {

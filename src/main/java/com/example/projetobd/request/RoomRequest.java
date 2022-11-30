@@ -1,4 +1,4 @@
-package com.example.projetobd.controller.api.frontend;
+package com.example.projetobd.request;
 
 import lombok.Data;
 

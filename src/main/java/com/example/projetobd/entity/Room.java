@@ -40,4 +40,5 @@ public class Room {
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }

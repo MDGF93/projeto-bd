@@ -6,8 +6,6 @@ import lombok.Data;
 @Data
 public class TicketBuyRequest {
     private Long sessionId;
-    private Integer seatNumber;
     private TicketType ticketType;
     private boolean isCreditCard;
-
 }

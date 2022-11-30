@@ -3,7 +3,6 @@ package com.example.projetobd.request;
 import com.example.projetobd.entity.Genre;
 import lombok.Data;
 
-import javax.validation.Constraint;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -29,7 +28,5 @@ public class MoviePosterRequest {
     private Integer requiredAge;
     private String producer;
     private boolean national;
-    private boolean released;
     private String url;
-
 }

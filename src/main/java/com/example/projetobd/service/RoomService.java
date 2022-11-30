@@ -7,6 +7,8 @@ import com.example.projetobd.repository.RoomRepository;
 import com.example.projetobd.request.SessionCreateRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,16 +36,20 @@ public class RoomService {
         session.setRoom(room);
         session.setSessionMovieTitle(session.getMovie().getTitleBr());
         session.setEndTime(session.getStartTime().plusMinutes(session.getMovie().getLength()));
+        session.setDate(sessionCreateRequest.getDate());
+        session.setAvailableSeats(session.getRoom().getCapacity());
+        session.setTickets(new ArrayList<>());
         //Check if the sessions that is being passed won't be in the same time interval as another session
-        if (room.getSessions().stream().anyMatch(s -> s.getStartTime().isBefore(session.getEndTime()) && s.getEndTime().isAfter(session.getStartTime()))) {
-            throw new RuntimeException("The session that is being passed is in the same time interval as another session");
+        for (Session session_element: room.getSessions()){
+            if (session_element.getLocalDateTime().equals(session.getLocalDateTime())){
+                throw new RuntimeException("There is already a session in this room at this time");
+            }
         }
-        else {
-            //add this session to the movie's sessions list
-            session.getMovie().getSessions().add(session);
-            room.getSessions().add(session);
-            roomRepository.save(room);
-        }
+
+        //add this session to the movie's sessions list
+        session.getMovie().getSessions().add(session);
+        room.getSessions().add(session);
+        roomRepository.save(room);
     }
 
     public void removeSessionFromRoom(Long roomId, Long sessionId) {
@@ -80,6 +86,36 @@ public class RoomService {
     public void deleteRoom(Long roomId) {
         roomRepository.deleteById(roomId);
     }
+
+   public List<Session> organizeSessionsByDate(List<Session> sessions_list){
+       for (int i = 0; i < sessions_list.size(); i++){
+            for (int j = 0; j < sessions_list.size(); j++){
+                if (sessions_list.get(i).getDate().isBefore(sessions_list.get(j).getDate())){
+                    Session aux = sessions_list.get(i);
+                    sessions_list.set(i, sessions_list.get(j));
+                    sessions_list.set(j, aux);
+                }
+            }
+        }
+        return sessions_list;
+   }
+
+   public List<Session> getSessionsThatAreNotFullAndStillRunning(Long roomId){
+        Room room = roomRepository.findById(roomId).get();
+        List<Session> sessions = room.getSessions();
+        sessions.removeIf(s -> s.getTickets().size() == s.getRoom().getCapacity() || s.getLocalDateTime().isBefore(LocalDateTime.now()));
+        return organizeSessionsByDate(sessions);
+   }
+
+   public List<Session> getSessionsThatAreNotFullAndStillRunning(){
+        List<Room> rooms = roomRepository.findAll();
+        List<Session> sessions = new ArrayList<>() ;
+        for (Room room: rooms){
+            sessions.addAll(room.getSessions());
+        }
+       sessions.removeIf(s -> s.getTickets().size() == s.getRoom().getCapacity() || s.getLocalDateTime().isBefore(LocalDateTime.now()));
+        return organizeSessionsByDate(sessions);
+   }
 }
 
 

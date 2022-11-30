@@ -31,6 +31,7 @@ public class MovieService {
 
     public String createMovie(MoviePosterRequest request) {
         Movie movieToSave = modelMapper.map(request, Movie.class);
+        movieToSave.setReleased(false);
         movieRepository.save(movieToSave);
         if (request.getUrl() != null) {
             Poster posterToSave = new Poster(request.getUrl(), movieToSave);

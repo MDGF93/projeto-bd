@@ -1,13 +1,16 @@
 package com.example.projetobd.controller.api.frontend;
 
+import com.example.projetobd.request.RoomRequest;
 import com.example.projetobd.request.SessionCreateRequest;
 import com.example.projetobd.service.MovieService;
 import com.example.projetobd.service.RoomService;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/rooms")
@@ -15,17 +18,16 @@ public class RoomControllerFront {
 
     private final RoomService roomService;
     private final MovieService movieService;
-    private final ModelMapper modelMapper;
 
-    public RoomControllerFront(RoomService roomService, MovieService movieService, ModelMapper modelMapper) {
+    public RoomControllerFront(RoomService roomService, MovieService movieService) {
         this.roomService = roomService;
         this.movieService = movieService;
-        this.modelMapper = modelMapper;
     }
 
     @RequestMapping
     public String getRooms(Model model){
         model.addAttribute("rooms", roomService.getRooms());
+        model.addAttribute("roomService", roomService);
         return "rooms";
     }
 
@@ -39,10 +41,7 @@ public class RoomControllerFront {
 
     @PostMapping("/{roomId}/new-session")
     public String addSessionToRoom(SessionCreateRequest sessionCreateRequest) {
-        System.out.println("I'm here at line 44");
-        System.out.println(sessionCreateRequest);
         roomService.addSessionToRoom(sessionCreateRequest);
-        System.out.println(sessionCreateRequest);
         return "redirect:/rooms";
     }
 
@@ -58,21 +57,6 @@ public class RoomControllerFront {
             return "add-room";
         }
         roomService.createRoom(roomRequest.getCapacity());
-        return "redirect:/rooms";
-    }
-
-    @GetMapping("/{roomId}/edit")
-    public String editRoomForm(@PathVariable Long roomId, Model model) {
-        model.addAttribute("room", roomService.getRoomById(roomId));
-        return "edit-room";
-    }
-
-    @PutMapping("/{roomId}/edit")
-    public String editRoom(@PathVariable Long roomId, RoomRequest roomRequest, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            return "edit-room";
-        }
-        roomService.updateRoom(roomId, roomRequest.getCapacity());
         return "redirect:/rooms";
     }
 
