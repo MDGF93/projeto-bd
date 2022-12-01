@@ -37,8 +37,8 @@
         <div class="row">
             <h1>Comprar snacks</h1>
         </div>
-        <form action='#' th:action="@{/snacks/order}" th:object="${snacksQuantity}" method="post" class="form">
-            <table class="table table-striped" th:each="idx : ${snacksId.size()}">
+        <form action='#' th:action="@{/snacks/order}" th:object="${snackOrderCreateRequest}" method="post" class="form">
+            <table class="table table-striped">
                 <thead class = "table-dark">
                     <tr>
                         <th>Nome</th>
@@ -46,14 +46,26 @@
                         <th>Quantidade</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td th:text="${snackService.getSnackById('__[${idx}]__').getName()}"></td>
-                        <td th:text="${snackService.getSnackById('__[${idx}]__').getPrice()}"></td>
+                <tbody  th:each="id : ${idsAndQty}">
+                    <tr><!--
+                        <td th:text="${snackService.getSnackById(id).getName()}"></td>
+                        <td th:text="${snackService.getSnackById(id).getPrice()}"></td>
                         <td>
                             <div class="form-group">
-                                <input name="quantity" type="number" th:field="*{snacksOrder['__${snackEntry.getKey()}__']}" class="form-control-sm" min="0" max="10">
+                                <input type="number"
+                                    th:name="${snackService.getSnackById(id).name}"
+                                    th:field="*{}" class="form-control-sm" min="0" max="10"
+                                >
                             </div>
+                        </td>
+                        -->
+
+                        <td th:text="${id.getKey()}"></td>
+                        <td th:text="${id.getValue()}"></td>
+                        <td>
+                            <input type="number"
+                                   th:field="*{snacksQuantity[__${id.getKey()-1}__]}"
+                            >
                         </td>
                     </tr>
                 </tbody>

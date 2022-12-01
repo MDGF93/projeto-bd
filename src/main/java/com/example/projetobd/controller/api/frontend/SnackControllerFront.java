@@ -2,8 +2,8 @@ package com.example.projetobd.controller.api.frontend;
 
 
 import com.example.projetobd.entity.Snack;
-import com.example.projetobd.entity.SnackOrder;
 import com.example.projetobd.request.SnackCreateRequest;
+import com.example.projetobd.request.SnackOrderCreateRequest;
 import com.example.projetobd.service.SnackOrderService;
 import com.example.projetobd.service.SnackService;
 import org.springframework.stereotype.Controller;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -74,21 +75,25 @@ public class SnackControllerFront {
     public String orderSnacksForm(Model model){
         //Create a map that will contain all the snacks id and the quantity of each one
         List<Long> snacksId = snackService.getAllSnacks().stream().map(Snack::getId).toList();
-        List<Integer> snacksQuantity = snacksId.stream().map(snackId -> 0).toList();
-
+        ArrayList<Integer> snacksQuantity = new ArrayList<>(snacksId.stream().map(snackId -> 0).toList());
+        SnackOrderCreateRequest snackOrderCreateRequest = new SnackOrderCreateRequest(snacksId, snacksQuantity);
+        System.out.println("Before the form is loaded, the snacksQuantity is: " + snackOrderCreateRequest.getSnacksQuantity());
+        model.addAttribute("idsAndQty", snackOrderCreateRequest.getAllSnacksIdsAndSnacksQuantity());
         model.addAttribute("allSnacks", snackService.getAllSnacks());
         model.addAttribute("snackService", snackService);
-        model.addAttribute("snacksId", snacksId);
-        model.addAttribute("snacksQuantity", snacksQuantity);
+        model.addAttribute("snackOrderCreateRequest", snackOrderCreateRequest);
         return "order-snacks";
     }
 
     @PostMapping("/order")
-    public String orderSnacks(SnackOrder snackOrder, BindingResult bindingResult) {
+    public String orderSnacks(SnackOrderCreateRequest snackOrderCreateRequest, BindingResult bindingResult) {
+        snackOrderCreateRequest.setSnacksId(snackService.getAllSnacks().stream().map(Snack::getId).toList());
         if(bindingResult.hasErrors()) {
             return "order-snacks";
         }
-        snackOrderService.createNewSnackOrder(snackOrder);
+        System.out.println("Snack order request -> " + snackOrderCreateRequest);
+        snackOrderService.createNewSnackOrder(snackOrderCreateRequest);
+        System.out.println("Total price: " + snackOrderService.calculateSnackOrderTotalPrice(snackOrderCreateRequest));
         return "redirect:/snacks";
     }
 
