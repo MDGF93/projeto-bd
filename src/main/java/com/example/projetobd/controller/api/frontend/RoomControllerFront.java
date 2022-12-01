@@ -24,7 +24,7 @@ public class RoomControllerFront {
         this.movieService = movieService;
     }
 
-    @RequestMapping
+    @GetMapping
     public String getRooms(Model model){
         model.addAttribute("rooms", roomService.getRooms());
         model.addAttribute("roomService", roomService);

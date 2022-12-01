@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciamento do Snack Bar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+          crossorigin="anonymous">
+</head>
+
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+            crossorigin="anonymous">
+    </script>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Gerenciamento do Snack Bar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" th:href="@{/snacks}">Home</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Create a form to order snacks, using thymeleaf and bootstrap -->
+    <div class="container">
+        <div class="row">
+            <h1>Comprar snacks</h1>
+        </div>
+        <form action='#' th:action="@{/snacks/order}" th:object="${snacksQuantity}" method="post" class="form">
+            <table class="table table-striped" th:each="idx : ${snacksId.size()}">
+                <thead class = "table-dark">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Preço (un.)</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${snackService.getSnackById('__[${idx}]__').getName()}"></td>
+                        <td th:text="${snackService.getSnackById('__[${idx}]__').getPrice()}"></td>
+                        <td>
+                            <div class="form-group">
+                                <input name="quantity" type="number" th:field="*{snacksOrder['__${snackEntry.getKey()}__']}" class="form-control-sm" min="0" max="10">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">Comprar</button>
+        </form>
+    </div>
+
+</body>
+</html>
+

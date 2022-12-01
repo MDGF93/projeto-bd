@@ -18,13 +18,13 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<Ticket> tickets;
+    private Ticket ticket;
 
     @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<Snack> snacks;
+    private List<SnackOrder> snacks;
 
     private Double total;
 
