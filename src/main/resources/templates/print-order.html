@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciamento das salas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+          crossorigin="anonymous">
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous">
+</script>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Gerenciamento das salas</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" th:href="@{/rooms}">Home</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Navbar -->
+
+<!-- Display the ticket's infos in a printable manner -->
+<div class="container">
+    <div class="row">
+        <h1>Informações do ingresso</h1>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h3>Nome do filme:</h3>
+            <p th:text="${ticket.session.movie.titleBr}"></p>
+        </div>
+        <div class="col-6">
+            <h3>Data da sessão:</h3>
+            <p th:text="${ticket.session.getDateAndTime()}"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h3>Horário da sessão:</h3>
+            <p th:text="${ticket.session.startTime}"></p>
+        </div>
+        <div class="col-6">
+            <h3>Número da sala:</h3>
+            <p th:text="${ticket.session.room.id}"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h3>Preço do ingresso:</h3>
+            <p th:text="'R$ '+${ticketService.getTicketPrice(ticket.session.getDate(), ticket.getTicketType(), ticket.creditCard)}"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h3>Número do ingresso:</h3>
+            <p th:text="${ticket.seatNumber}"></p>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <h1>Lanches</h1>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div th:each="entrySet : ${snackOrder.entrySet()}">
+                <h5 th:text="${snackService.getSnackById(entrySet.getKey()).getName()} + '(' + ${snackService.getSnackById(entrySet.getKey()).getPrice()} + ' x ' + ${entrySet.getValue()} + ' = ' + ${entrySet.getValue()*snackService.getSnackById(entrySet.getKey()).getPrice()} +')'"></h5>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -116,6 +116,7 @@ public class RoomService {
        sessions.removeIf(s -> s.getTickets().size() == s.getRoom().getCapacity() || s.getLocalDateTime().isBefore(LocalDateTime.now()));
         return organizeSessionsByDate(sessions);
    }
+
 }
 
 

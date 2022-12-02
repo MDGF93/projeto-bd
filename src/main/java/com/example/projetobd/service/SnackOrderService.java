@@ -24,12 +24,14 @@ public class SnackOrderService {
         }
     }
 
-    public void createNewSnackOrder(SnackOrderCreateRequest snackOrderCreateRequest) {
+
+    public Map<Long, Integer> createNewSnackOrder(SnackOrderCreateRequest snackOrderCreateRequest) {
         Map<Long, Integer> snacksIdsAndSnacksQuantity = snackOrderCreateRequest.getAllSnacksIdsAndSnacksQuantity();
         for (Map.Entry<Long, Integer> entry : snacksIdsAndSnacksQuantity.entrySet()) {
             SnackOrder snackOrder = new SnackOrder(snackService.getSnackById(entry.getKey()), entry.getValue());
             snackOrderRepository.save(snackOrder);
         }
+        return snacksIdsAndSnacksQuantity;
     }
 
     public void deleteSnackOrderById(Long snackOrderId) {

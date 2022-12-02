@@ -47,25 +47,11 @@
                     </tr>
                 </thead>
                 <tbody  th:each="id : ${idsAndQty}">
-                    <tr><!--
-                        <td th:text="${snackService.getSnackById(id).getName()}"></td>
-                        <td th:text="${snackService.getSnackById(id).getPrice()}"></td>
-                        <td>
-                            <div class="form-group">
-                                <input type="number"
-                                    th:name="${snackService.getSnackById(id).name}"
-                                    th:field="*{}" class="form-control-sm" min="0" max="10"
-                                >
-                            </div>
-                        </td>
-                        -->
-
-                        <td th:text="${id.getKey()}"></td>
-                        <td th:text="${id.getValue()}"></td>
+                        <td th:text="${snackService.getSnackById(id.getKey()).getName()}"></td>
+                        <td th:text="${snackService.getSnackById(id.getKey()).getPrice()}"></td>
                         <td>
                             <input type="number"
-                                   th:field="*{snacksQuantity[__${id.getKey()-1}__]}"
-                            >
+                                   th:field="*{snacksQuantity[__${id.getKey()-1}__]}">
                         </td>
                     </tr>
                 </tbody>

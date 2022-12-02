@@ -8,4 +8,14 @@ public class TicketBuyRequest {
     private Long sessionId;
     private TicketType ticketType;
     private boolean isCreditCard;
+
+    public TicketBuyRequest(Long sessionId, TicketType ticketType, boolean isCreditCard) {
+        this.sessionId = sessionId;
+        this.ticketType = ticketType;
+        this.isCreditCard = isCreditCard;
+    }
+
+    public TicketBuyRequest() {
+    }
+
 }
