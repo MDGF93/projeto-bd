@@ -18,9 +18,9 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
-    private Ticket ticket;
+    private List<Ticket> ticket;
 
     @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude

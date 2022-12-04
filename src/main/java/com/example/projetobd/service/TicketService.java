@@ -24,10 +24,18 @@ public class TicketService {
     }
 
     public Ticket buyTicket(TicketBuyRequest ticketBuyRequest) {
+        //Check if sessionId is not null
+        if (ticketBuyRequest.getSessionId() == null) {
+            return null;
+        }
         //Check if there's available seats in the session
         Session movieSession = sessionRepository.findById(ticketBuyRequest.getSessionId()).get();
         if (movieSession.getAvailableSeats() == 0){
             throw new RuntimeException("There are no available seats in this session");
+        }
+        //Check if any of the fields are null
+        if (ticketBuyRequest.getSessionId() == null || ticketBuyRequest.getTicketType() == null){
+            return null;
         }
         Ticket ticket = new Ticket();
         ticket.setSession(movieSession);
@@ -97,7 +105,8 @@ public class TicketService {
         if (isCreditCard) {
             return price * 1.1;
         }
-        return price;
+        //format price to have only 2 decimal places
+        return Math.round(price * 100.0) / 100.0;
     }
 
     public List<Ticket> getAllTickets() {

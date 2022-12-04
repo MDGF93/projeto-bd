@@ -2,6 +2,7 @@ package com.example.projetobd.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.ManyToAny;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -36,11 +37,13 @@ public class Movie {
     private String producer;
     private boolean national;
     private boolean released;
+
     @OneToMany
     @ToString.Exclude
     private List<Session> sessions;
     @OneToOne(cascade = CascadeType.PERSIST)
     private Poster poster;
+
 
     @Override
     public boolean equals(Object o) {

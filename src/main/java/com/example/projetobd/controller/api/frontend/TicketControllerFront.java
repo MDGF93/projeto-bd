@@ -23,13 +23,4 @@ public class TicketControllerFront {
         this.roomService = roomService;
     }
 
-    @GetMapping("/buy")
-    public String buyTicketForm(Model model) {
-        model.addAttribute("ticketBuyRequest", new TicketBuyRequest());
-        model.addAttribute("ticketService", ticketService);
-        return "buy-ticket";
-    }
-
-
-
 }

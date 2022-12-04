@@ -56,6 +56,15 @@ public class SnackOrderService {
         return totalPrice;
     }
 
+    public Double calculateSnackOrderTotalPrice(Map<Long, Integer> snacksIdsAndSnacksQuantity) {
+        double totalPrice = 0.0;
+        for (Map.Entry<Long, Integer> entry : snacksIdsAndSnacksQuantity.entrySet()) {
+            SnackOrder snackOrder = new SnackOrder(snackService.getSnackById(entry.getKey()), entry.getValue());
+            totalPrice += snackOrder.getSnack().getPrice() * snackOrder.getQuantity();
+        }
+        return totalPrice;
+    }
+
     public SnackOrder getSnackOrderById(Long id) {
         return snackOrderRepository.findById(id).orElse(null);
     }

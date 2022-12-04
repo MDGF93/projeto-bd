@@ -35,6 +35,13 @@ public class TransactionControllerFront {
         this.sessionService = sessionService;
     }
 
+    @GetMapping("/prebuy")
+    public String prebuy(Model model) {
+
+        return "pre-buy-tickets-and-snacks";
+    }
+
+
     @GetMapping("/buy")
     public String buyTicketsAndSnacksForm(Model model) {
         List<Long> snacksId = snackService.getAllSnacks().stream().map(Snack::getId).toList();
@@ -57,16 +64,15 @@ public class TransactionControllerFront {
         if(bindingResult.hasErrors()) {
             return "buy-snacks-tickets";
         }
-        System.out.println("SNACKS AND TICKETS -> " + snacksAndTicketsRequest);
         List<Long> snacksId = snackService.getAllSnacks().stream().map(Snack::getId).toList();
         snacksAndTicketsRequest.setSnacksId(snacksId);
+        System.out.println("Aqui");
         Ticket ticket = ticketService.buyTicket(snacksAndTicketsRequest.createTicketBuyRequest());
-        System.out.println("TICKET CREATED = " + ticket);
         Map<Long, Integer> snackOrder = snackOrderService.createNewSnackOrder(snacksAndTicketsRequest.createSnackOrderCreateRequest());
-        System.out.println("SNACK ORDER CREATED = " + snackOrder);
         ticketService.buyTicket(snacksAndTicketsRequest.createTicketBuyRequest());
         snacksAndTicketsRequest.setSnacksId(new ArrayList<>(snackOrder.keySet()));
         snackOrderService.createNewSnackOrder(snacksAndTicketsRequest.createSnackOrderCreateRequest());
+        model.addAttribute("snackOrderService", snackOrderService);
         model.addAttribute("snackOrder", snackOrder);
         model.addAttribute("ticket", ticket);
         model.addAttribute("ticketService", ticketService);

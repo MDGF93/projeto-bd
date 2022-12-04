@@ -2,12 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Adicionar nova sala</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <title>Gerenciamento das salas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+          crossorigin="anonymous">
 </head>
+
 <body>
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+            crossorigin="anonymous">
     </script>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-light">
@@ -30,18 +35,20 @@
         </div>
     </nav>
     <!-- Navbar -->
+
     <div class="container">
+        <!-- Get ammount of tickets to be bought -->
         <div class="row">
-            <h1>Adicionar uma nova sala</h1>
-        </div>
-        <form action="#" th:action="@{/rooms}" th:object="${roomRequest}" method="post" class="form">
-            <div class="form-group">
-                <label for="capacity">Quantidade de cadeiras na sala:</label>
-                <input type="number" class="form-control" id="capacity" th:field="*{capacity}" placeholder="Digite a quantidade de cadeiras na sala">
-                <div class="text-danger" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
+            <div class="col-12">
+                <h1>Comprar ingressos</h1>
+                <form action="#" th:action="@{/transactions/buy}" th:object="${transaction}" method="post">
+                    <div class="mb-3">
+                        <label for="ticketAmount" class="form-label">Quantidade de ingressos</label>
+                        <input type="number" class="form-control" id="ticketAmount" th:field="*{ticketAmount}">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Comprar</button>
+                </form>
             </div>
-            <button type="submit" class="btn btn-primary">Adicionar</button>
-        </form>
     </div>
 </body>
 </html>
