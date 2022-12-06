@@ -6,7 +6,7 @@
 
 ## Modelo lógico do banco de dados
 
-<img src="https://i.imgur.com/64qlV8R.png">
+<img src="https://i.imgur.com/yvxXGnZ.png">
 
 ### Modelo conceitual do banco de dados
 
